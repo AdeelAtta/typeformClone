@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Language from "./components/language";
+import Form from './components/form'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <div className="w-full h-[100vh] flex overflow-hidden">
+      <section className="bg-[#191919] flex-[0.82] flex flex-col items-center justify-center">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <h1 className="text-4xl text-white text-center mb-9 break-words">
+            Sign up <br /> and come on in
+          </h1>
+          <div className="px-40">
+            <img src="./product.webp" alt="product" />
+          </div>
+        </div>
+        <p className="text-white text-sm text-center font-normal justify-self-center absolute bottom-12">
+          © Typeform
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </section>
+      <section className="bg-white flex-1  min-h-[90vh] ">
+        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 ">
+          <div className="text-sm flex items-center justify-between p-2">
+            <div>
+              <Language />
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs">
+              <span>Already have and account? </span>
+              <button className="px-4 py-1 text-xs rounded-md border border-black-500">
+                Log in
+              </button>{" "}
+            </div>
+          </div>
+          <Form />
+        </div>
+      </section>
     </div>
   );
 }

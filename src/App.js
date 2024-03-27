@@ -4,12 +4,12 @@ import Form from './components/form'
 function App() {
   return (
     <div className="w-full h-[100vh] flex overflow-hidden">
-      <section className="hidden lg:flex-[0.82] lg:flex flex-col items-center justify-center bg-[#191919] ">
+      <section className="hidden w-full lg:flex-[0.82] lg:flex flex-col items-center justify-center bg-[#191919] ">
         <div className="w-full h-full flex flex-col items-center justify-center">
           <h1 className="text-4xl text-white text-center mb-9 break-words">
             Sign up <br /> and come on in
           </h1>
-          <div className="px-40">
+          <div className="">
             <img src="./product.webp" alt="product" />
           </div>
         </div>
@@ -17,8 +17,8 @@ function App() {
           © Typeform
         </p>
       </section>
-      <section className="bg-white w-full lg:flex-1  min-h-[90vh] overflow-scroll ">
-        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 ">
+      <section className="bg-white w-full lg:flex-1  min-h-[90vh] ">
+        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 overflow-scroll">
           <div className="text-sm flex items-center justify-between p-2">
             <div>
               <Language />

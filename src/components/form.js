@@ -1,7 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { MdError } from "react-icons/md";
 
 const Form = () => {
   const [isOptions, setIsOptions] = useState(false);
+
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const isValidEmail = useMemo(() => {
+    if (formData?.email?.length < 1) {
+      return "This field cannot be left blank";
+    } else if (formData?.email?.length > 0) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(emailRegex.test(formData.email)){
+        return false
+      }else {
+        return "Enter a valid email address"
+      }
+    }else{
+      return false;
+    }
+  }, [formData?.email]);
+
+  const isValidPassword = useMemo(()=>{
+    
+    const numberRegex = /\d/;
+    const charRegex = /\S/;
+    const specialRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+    if((formData?.password?.length < 8 && formData?.password?.length > 0) || (formData?.password?.length > 0 && ( !numberRegex.test(formData?.password) || !charRegex.test(formData.password) || !specialRegex.test(formData.password)))){
+      return "Use 8 or more characters with a mix of letters, numbers and symbols";
+    }else{
+      return false;
+    }
+
+  },[formData?.password])
 
   return (
     <div className="ml-auto mr-auto flex flex-col items-center justify-center gap-6 max-w-[75%] h-auto min-h-[90vh]">
@@ -37,19 +73,31 @@ const Form = () => {
       <p className="text-2xl font-thin text-center text-[#5e5e5e]">
         Get better data with conversational forms, surveys, quizzes & more.
       </p>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col">
         <div className="rounded border-black border">
           <input
             type="email"
             id="Email"
+            name="email"
+            onChange={handleChange}
+            value={formData.email ?? ""}
             placeholder="Email"
             className="w-full rounded p-2 min-w-[260px]"
           />
         </div>
-        <div className="relative rounded border-black border">
+        {!!isValidEmail && (
+          <p className="text-red-400 text-xs py-2 flex items-center justify-start">
+            <MdError className="text-sm mr-1" />
+            {`${isValidEmail}`}
+          </p>
+        )}
+        <div className="relative rounded border-black border mt-2">
           <input
             type="password"
             id="password"
+            name="password"
+            onChange={handleChange}
+            value={formData.password ?? ""}
             placeholder="Password"
             className="w-full rounded p-2 min-w-[260px]"
           />
@@ -74,7 +122,11 @@ const Form = () => {
             </svg>
           </span>
         </div>
-        <div className="flex items-start justify-center gap-4 max-w-[260px]">
+        {!!isValidPassword && <p className="text-red-400 text-xs py-2 flex items-start justify-start max-w-[250px]">
+          <MdError className="text-lg mr-1" />
+          {isValidPassword}
+        </p>}
+        <div className="flex items-start justify-center gap-4 max-w-[260px] mt-4">
           <input className="scale-[1.7] mt-2" type="checkbox" />
           <p className="text-sm font-thin text-[#5e5e5e]">
             I agree to Typeforms <span>Terms of Service</span>,
@@ -82,101 +134,108 @@ const Form = () => {
             <span>Data Processing Agreement</span>.
           </p>
         </div>
-        <div className="ml-7 text-sm">
-        <p
-          className="w-full flex justify-between items-center mb-4"
-          onClick={() => setIsOptions(!isOptions)}
-        >
-          See Options
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={` h-4 w-4 ${isOptions ? "rotate-180" : "rotate-0"} `}
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        <div className="ml-7 text-sm mt-4">
+          <p
+            className="w-full flex justify-between items-center mb-4"
+            onClick={() => setIsOptions(!isOptions)}
           >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </p>
-        <div
-          className={`transition-all duration-300 ${
-            isOptions ? " h-80 " : " h-0 "
-          } overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[240px]`}
-        >
-          <div className=" flex flex-col text-sm gap-2">
-            Get useful tips, inspiration, and offers via e-communication.
-            <div className="flex items-center justify-start gap-4 mb-3">
-          <label className="flex items-center justify-center gap-2" >
-            <input
-              type="radio"
-              name="tips"
-              id="tips"
-              class="size-5 border-gray-300 text-black-500"
-            /> Yes
-          </label>
-          <label className="flex items-center justify-center gap-2">
-            <input
-              type="radio"
-              name="tips"
-              id="no"
-              class="size-5 border-gray-300 text-black-500"
-            /> No
-          </label>
-          </div>
-          </div>
+            See Options
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={` h-4 w-4 ${isOptions ? "rotate-180" : "rotate-0"} `}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </p>
+          <div
+            className={`transition-all duration-300 ${
+              isOptions ? " h-80 " : " h-0 "
+            } overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[240px]`}
+          >
+            <div className=" flex flex-col text-sm gap-2">
+              Get useful tips, inspiration, and offers via e-communication.
+              <div className="flex items-center justify-start gap-4 mb-3">
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="tips"
+                    id="tipsyes"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  Yes
+                </label>
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="tips"
+                    id="tipsno"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  No
+                </label>
+              </div>
+            </div>
 
-          <div className="flex flex-col text-sm gap-2">
-          Tailor Typeform to my needs based on my activity.See Privacy Policy
-          <div className="flex items-center justify-start gap-4 mb-3">
-          <label className="flex items-center justify-center gap-2" >
-            <input
-              type="radio"
-              name="activity"
-              id="yes"
-              class="size-5 border-gray-300 text-black-500"
-            /> Yes
-          </label>
-          <label className="flex items-center justify-center gap-2">
-            <input
-              type="radio"
-              name="activity"
-              id="no"
-              class="size-5 border-gray-300 text-black-500"
-            /> No
-          </label>
-          </div>
-          </div>
+            <div className="flex flex-col text-sm gap-2">
+              Tailor Typeform to my needs based on my activity.See Privacy
+              Policy
+              <div className="flex items-center justify-start gap-4 mb-3">
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="activity"
+                    id="activityyes"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  Yes
+                </label>
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="activity"
+                    id="activityno"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  No
+                </label>
+              </div>
+            </div>
 
+            <div className="flex flex-col text-sm gap-2">
+              Enrich my data with select third parties for more relevant
+              content.See Privacy Policy{" "}
+              <div className="flex items-center justify-start gap-4 mb-3">
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="data"
+                    id="datayes"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  Yes
+                </label>
+                <label className="flex items-center justify-center gap-2">
+                  <input
+                    type="radio"
+                    name="data"
+                    id="datano"
+                    class="size-5 border-gray-300 text-black-500"
+                  />{" "}
+                  No
+                </label>
+              </div>
+            </div>
 
-          <div className="flex flex-col text-sm gap-2">
-          Enrich my data with select third parties for more relevant content.See Privacy Policy          <div className="flex items-center justify-start gap-4 mb-3">
-          <label className="flex items-center justify-center gap-2" >
-            <input
-              type="radio"
-              name="data"
-              id="yes"
-              class="size-5 border-gray-300 text-black-500"
-            /> Yes
-          </label>
-          <label className="flex items-center justify-center gap-2">
-            <input
-              type="radio"
-              name="data"
-              id="no"
-              class="size-5 border-gray-300 text-black-500"
-            /> No
-          </label>
+            <div className="flex flex-col text-sm gap-2">
+              You can update your preferences in your Profile at any time
+            </div>
           </div>
-          </div>
-
-          <div className="flex flex-col text-sm gap-2">
-          You can update your preferences in your Profile at any time
-          </div>
-
-        </div>
         </div>
         <button className="text-white bg-[#191919] p-2 w-[80%] ml-auto mr-auto rounded">
           Create my free account

@@ -4,7 +4,7 @@ import Form from './components/form'
 function App() {
   return (
     <div className="w-full h-[100vh] flex overflow-hidden">
-      <section className="bg-[#191919] flex-[0.82] flex flex-col items-center justify-center">
+      <section className="hidden lg:flex-[0.82] lg:flex flex-col items-center justify-center bg-[#191919] ">
         <div className="w-full h-full flex flex-col items-center justify-center">
           <h1 className="text-4xl text-white text-center mb-9 break-words">
             Sign up <br /> and come on in
@@ -17,7 +17,7 @@ function App() {
           © Typeform
         </p>
       </section>
-      <section className="bg-white flex-1  min-h-[90vh] ">
+      <section className="bg-white w-full lg:flex-1  min-h-[90vh] overflow-scroll ">
         <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 ">
           <div className="text-sm flex items-center justify-between p-2">
             <div>

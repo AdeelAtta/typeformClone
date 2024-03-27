@@ -104,7 +104,7 @@ const Form = () => {
         <div
           className={`transition-all duration-300 ${
             isOptions ? " h-80 " : " h-0 "
-          } h-auto overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[240px]`}
+          } overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[240px]`}
         >
           <div className=" flex flex-col text-sm gap-2">
             Get useful tips, inspiration, and offers via e-communication.

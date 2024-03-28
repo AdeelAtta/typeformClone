@@ -1,5 +1,5 @@
 import Language from "./components/language";
-import Form from './components/form'
+import Form from "./components/form";
 
 function App() {
   return (
@@ -10,7 +10,13 @@ function App() {
             Sign up <br /> and come on in
           </h1>
           <div className="">
-            <img src="./product.webp" alt="product" />
+            <picture>
+              <img
+                src="./product-sample.webp"
+                alt="Flowers"
+                style={{ width: "auto" }}
+              />
+            </picture>
           </div>
         </div>
         <p className="text-white text-sm text-center font-normal justify-self-center absolute bottom-12">
@@ -18,7 +24,7 @@ function App() {
         </p>
       </section>
       <section className="bg-white w-full lg:flex-1  min-h-[90vh] ">
-        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 overflow-scroll">
+        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 overflow-y-scroll">
           <div className="text-sm flex items-center justify-between p-2">
             <div>
               <Language />

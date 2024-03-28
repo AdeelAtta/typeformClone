@@ -35,6 +35,7 @@ const Language = () => {
           height="17"
           viewBox="0 0 20 20"
           width="17"
+          className="mr-2"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -44,7 +45,7 @@ const Language = () => {
           ></path>
         </svg>
         <span className="text-xs">{lang}</span>
-        <button className="h-full py-2 font-thin text-black hover:text-gray-700">
+        <button className="h-full font-thin text-black hover:text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"

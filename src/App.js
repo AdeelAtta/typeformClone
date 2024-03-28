@@ -25,7 +25,7 @@ function App() {
       </section>
       <section className="bg-white w-full lg:flex-1 rounded-tl-2xl rounded-bl-2xl min-h-[90vh] -ml-4 ">
         <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl  overflow-y-auto ">
-          <div className="text-sm flex items-center justify-between py-2 px-6">
+          <div className="text-sm flex items-center justify-between py-4 px-6">
           
               <Language />
             

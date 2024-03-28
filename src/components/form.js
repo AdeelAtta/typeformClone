@@ -65,7 +65,7 @@ const Form = () => {
   }, [formData?.password]);
 
   return (
-    <div className="ml-auto mr-auto flex flex-col items-center justify-center  max-w-[542px] h-auto min-h-[90vh] ">
+    <div className="ml-auto mr-auto flex flex-col items-center justify-center max-w-[256px]  md:max-w-[542px] h-auto min-h-[90vh] ">
       <div className="flex items-center justify-center gap-3 h-20">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ const Form = () => {
           </svg>
         </span>
       </div>
-      <h2 className="text-2xl/9 font-thin text-center text-[#5e5e5e] mb-6">
+      <h2 className="text-xl md:text-xl/9 tracking-wide	font-thin text-center text-[#5e5e5e] mb-6 ">
         Get better data with conversational forms, surveys, quizzes & more.
       </h2>
       <form className="flex flex-col gap-1 pb-6">

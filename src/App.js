@@ -5,8 +5,8 @@ function App() {
   return (
     <div className="w-full h-[100vh] flex overflow-hidden">
       <section className="hidden w-full lg:flex-[0.82] lg:flex flex-col items-center justify-center bg-[#191919] ">
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <h1 className="text-4xl text-white text-center mb-9 break-words">
+        <div className="w-full h-full flex flex-col items-center justify-center ">
+          <h1 className="text-4xl/tight text-white text-center mb-9 break-words max-w-[366px]">
             Sign up <br /> and come on in
           </h1>
           <div className="">
@@ -14,7 +14,7 @@ function App() {
               <img
                 src="./product-sample.webp"
                 alt="Flowers"
-                style={{ width: "auto" }}
+                className="max-w-[366px]"
               />
             </picture>
           </div>
@@ -23,15 +23,15 @@ function App() {
           © Typeform
         </p>
       </section>
-      <section className="bg-white w-full lg:flex-1  min-h-[90vh] ">
-        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl -ml-4 overflow-y-scroll">
-          <div className="text-sm flex items-center justify-between p-2">
-            <div>
+      <section className="bg-white w-full lg:flex-1 rounded-tl-2xl rounded-bl-2xl min-h-[90vh] -ml-4 ">
+        <div className="bg-white w-full h-full rounded-tl-2xl rounded-bl-2xl  overflow-y-auto ">
+          <div className="text-sm flex items-center justify-between py-2 px-6">
+          
               <Language />
-            </div>
-            <div className="flex items-center justify-center gap-2 text-xs">
+            
+            <div className="flex items-center justify-center gap-2 text-sm font-normal">
               <span>Already have and account? </span>
-              <button className="px-4 py-1 text-xs rounded-md border border-black-500">
+              <button className="px-3 py-1 text-xs rounded-md border border-[#5e5e5e]">
                 Log in
               </button>{" "}
             </div>

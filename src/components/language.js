@@ -30,7 +30,7 @@ const Language = () => {
 
   return (
     <div ref={dropdownRef} className="relative" >
-      <div className="flex items-center gap-1 ml-5 cursor-pointer" onClick={()=>setIsDropDown(!isDropDown)}>
+      <div className="flex items-center gap-1 cursor-pointer" onClick={()=>setIsDropDown(!isDropDown)}>
         <svg
           height="17"
           viewBox="0 0 20 20"

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { MdError } from "react-icons/md";
+import RadioInput from "./radioInput";
 
 const Form = () => {
   const [isOptions, setIsOptions] = useState(false);
@@ -7,63 +8,65 @@ const Form = () => {
   const [formData, setFormData] = useState({});
 
   const handleInputChange = (e) => {
-    if(e.target.type === `checkbox`){
+    if (e.target.type === `checkbox`) {
       setFormData((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
-    }else{
+    } else {
       setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
 
   const handleRadioChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value}));
-    console.log(formData)
-  }
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    console.log(formData);
+  };
 
-  useEffect(()=>{
-
-    if(formData.isAgree){
-      setFormData((prev) => (
-        { ...prev, [`data`]: 'yes',
-        [`activity`]: 'yes',
-        [`tips`]: 'yes'
-        }));
+  useEffect(() => {
+    if (formData.isAgree) {
+      setFormData((prev) => ({
+        ...prev,
+        [`data`]: "Yes",
+        [`activity`]: "Yes",
+        [`tips`]: "Yes",
+      }));
     }
-
-  },[formData.isAgree])
-
+  }, [formData.isAgree]);
 
   const isValidEmail = useMemo(() => {
     if (formData?.email?.length < 1) {
       return "This field cannot be left blank";
     } else if (formData?.email?.length > 0) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if(emailRegex.test(formData.email)){
-        return false
-      }else {
-        return "Enter a valid email address"
+      if (emailRegex.test(formData.email)) {
+        return false;
+      } else {
+        return "Enter a valid email address";
       }
-    }else{
+    } else {
       return false;
     }
   }, [formData?.email]);
 
-  const isValidPassword = useMemo(()=>{
-    
+  const isValidPassword = useMemo(() => {
     const numberRegex = /\d/;
     const charRegex = /\S/;
     const specialRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-    if((formData?.password?.length < 8 && formData?.password?.length > 0) || (formData?.password?.length > 0 && ( !numberRegex.test(formData?.password) || !charRegex.test(formData.password) || !specialRegex.test(formData.password)))){
+    if (
+      (formData?.password?.length < 8 && formData?.password?.length > 0) ||
+      (formData?.password?.length > 0 &&
+        (!numberRegex.test(formData?.password) ||
+          !charRegex.test(formData.password) ||
+          !specialRegex.test(formData.password)))
+    ) {
       return "Use 8 or more characters with a mix of letters, numbers and symbols";
-    }else{
+    } else {
       return false;
     }
-
-  },[formData?.password])
+  }, [formData?.password]);
 
   return (
-    <div className="ml-auto mr-auto flex flex-col items-center justify-center gap-6 max-w-[75%] h-auto min-h-[90vh]">
-      <div className="flex items-center justify-center gap-3">
+    <div className="ml-auto mr-auto flex flex-col items-center justify-center  max-w-[542px] h-auto min-h-[90vh] mb-14">
+      <div className="flex items-center justify-center gap-3 h-20">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="33"
@@ -92,11 +95,11 @@ const Form = () => {
           </svg>
         </span>
       </div>
-      <p className="text-2xl font-thin text-center text-[#5e5e5e]">
+      <h2 className="text-2xl/9 font-thin text-center text-[#5e5e5e] mb-6">
         Get better data with conversational forms, surveys, quizzes & more.
-      </p>
-      <form className="flex flex-col">
-        <div className="rounded border-black border">
+      </h2>
+      <form className="flex flex-col gap-1">
+        <div className="rounded border-[#c2c2c1] border h-10">
           <input
             type="email"
             id="Email"
@@ -104,7 +107,7 @@ const Form = () => {
             onChange={handleInputChange}
             value={formData.email ?? ""}
             placeholder="Email"
-            className="w-full rounded p-2 min-w-[260px]"
+            className="w-full h-full py-[6px] px-2 rounded min-w-[260px] text-base/4"
           />
         </div>
         {!!isValidEmail && (
@@ -113,7 +116,7 @@ const Form = () => {
             {`${isValidEmail}`}
           </p>
         )}
-        <div className="relative rounded border-black border mt-2">
+        <div className="relative rounded border-[#c2c2c1] border mt-2 h-10">
           <input
             type="password"
             id="password"
@@ -121,7 +124,7 @@ const Form = () => {
             onChange={handleInputChange}
             value={formData.password ?? ""}
             placeholder="Password"
-            className="w-full rounded p-2 min-w-[260px]"
+            className="w-full h-full py-[6px] px-2 rounded min-w-[260px] text-base/4"
           />
           <span className=" absolute top-[50%] translate-y-[-50%] right-[4%]   text-gray-500">
             <svg
@@ -144,12 +147,20 @@ const Form = () => {
             </svg>
           </span>
         </div>
-        {!!isValidPassword && <p className="text-red-400 text-xs py-2 flex items-start justify-start max-w-[250px]">
-          <MdError className="text-lg mr-1" />
-          {isValidPassword}
-        </p>}
+        {!!isValidPassword && (
+          <p className="text-red-400 text-xs py-2 flex items-start justify-start max-w-[250px]">
+            <MdError className="text-lg mr-1" />
+            {isValidPassword}
+          </p>
+        )}
         <div className="flex items-start justify-center gap-4 max-w-[260px] mt-4">
-          <input className="scale-[1.7] mt-2" type="checkbox" name="isAgree" checked={formData?.isAgree} onChange={handleInputChange} />
+          <input
+            className="scale-[1.7] mt-2 ml-1"
+            type="checkbox"
+            name="isAgree"
+            checked={formData?.isAgree}
+            onChange={handleInputChange}
+          />
           <p className="text-sm font-thin text-[#5e5e5e]">
             I agree to Typeforms <span>Terms of Service</span>,
             <span>Privacy Policy</span> and{" "}
@@ -158,13 +169,15 @@ const Form = () => {
         </div>
         <div className="ml-7 text-sm mt-4 cursor-pointer">
           <p
-            className="w-full flex justify-between items-center mb-4"
+            className="w-full flex justify-between items-center "
             onClick={() => setIsOptions(!isOptions)}
           >
             See options
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={` h-4 w-4 ${isOptions ? "rotate-180" : "rotate-0"} `}
+              className={` p-2 h-8 w-8 ${
+                isOptions ? "rotate-180" : "rotate-0"
+              } `}
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -175,109 +188,87 @@ const Form = () => {
               />
             </svg>
           </p>
+        </div>
           <div
             className={`transition-all duration-300 ${
               isOptions ? " h-80 " : " h-0 "
-            } overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[240px]`}
+            } overflow-hidden flex flex-col items-start justify-center gap-1 max-w-[230px] ml-7 text-sm mt-4`}
           >
-            <div className=" flex flex-col text-sm gap-2">
-              Get useful tips, inspiration, and offers via e-communication.
+            <div className=" flex flex-col text-sm font-extralight">
+              <p className="mb-2">
+                Get useful tips, inspiration, and offers via e-communication.
+              </p>
               <div className="flex items-center justify-start gap-4 mb-3">
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="tips"
-                    id="tipsyes"
-                    value={'yes'}
-                    onChange={handleRadioChange}
-                    checked={formData?.tips === `yes`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  Yes
-                </label>
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="tips"
-                    id="tipsno"
-                    value={'no'}
-                    onChange={handleRadioChange}
-                    checked={formData?.tips === `no`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  No
-                </label>
+                <RadioInput
+                  name="tips"
+                  id="tipsyes"
+                  value={"Yes"}
+                  onChange={handleRadioChange}
+                  checked={formData?.tips === `Yes`}
+                />
+                <RadioInput
+                  name="tips"
+                  id="tipsno"
+                  value={"No"}
+                  onChange={handleRadioChange}
+                  checked={formData?.tips === `No`}
+                />
               </div>
             </div>
 
-            <div className="flex flex-col text-sm gap-2">
-              Tailor Typeform to my needs based on my activity.See Privacy
-              Policy
+            <div className="flex flex-col text-sm ">
+              <p className="mb-2">
+                Tailor Typeform to my needs based on my activity. See Privacy
+                Policy
+              </p>
               <div className="flex items-center justify-start gap-4 mb-3">
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activityyes"
-                    value={'yes'}
-                    onChange={handleRadioChange}
-                    checked={formData?.activity === `yes`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  Yes
-                </label>
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="activity"
-                    id="activityno"
-                    value={'no'}
-                    onChange={handleRadioChange}
-                    checked={formData?.activity === `no`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  No
-                </label>
+                <RadioInput
+                  name="activity"
+                  id="activityes"
+                  value={"Yes"}
+                  onChange={handleRadioChange}
+                  checked={formData?.activity === `Yes`}
+                />
+                <RadioInput
+                  name="activity"
+                  id="activityno"
+                  value={"No"}
+                  onChange={handleRadioChange}
+                  checked={formData?.activity === `No`}
+                />
               </div>
             </div>
 
-            <div className="flex flex-col text-sm gap-2">
-              Enrich my data with select third parties for more relevant
-              content.See Privacy Policy{" "}
+            <div className="flex flex-col text-sm ">
+              <p className="mb-2">
+                Enrich my data with select third parties for more relevant
+                content.See Privacy Policy
+              </p>
               <div className="flex items-center justify-start gap-4 mb-3">
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="data"
-                    id="datayes"
-                    value={'yes'}
-                    onChange={handleRadioChange}
-                    checked={formData?.data === `yes`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  Yes
-                </label>
-                <label className="flex items-center justify-center gap-2">
-                  <input
-                    type="radio"
-                    name="data"
-                    id="datano"
-                    value={'no'}
-                    onChange={handleRadioChange}
-                    checked={formData?.data === `no`}
-                    className="size-5 border-gray-300 text-black-500"
-                  />{" "}
-                  No
-                </label>
+                <RadioInput
+                  name="data"
+                  id="datayes"
+                  value={"Yes"}
+                  onChange={handleRadioChange}
+                  checked={formData?.data === `Yes`}
+                />
+                <RadioInput
+                  name="data"
+                  id="datano"
+                  value={"No"}
+                  onChange={handleRadioChange}
+                  checked={formData?.data === `No`}
+                />
               </div>
             </div>
 
-            <div className="flex flex-col text-sm gap-2">
-              You can update your preferences in your Profile at any time
+            <div className="flex flex-col text-sm ">
+              <p className="mb-2">
+                You can update your preferences in your Profile at any time
+              </p>
             </div>
           </div>
-        </div>
-        <button className="text-white bg-[#191919] p-2 w-[80%] ml-auto mr-auto rounded">
+        <button className="text-white bg-[#191919] p-2 w-[90%] ml-auto mr-auto rounded">
           Create my free account
         </button>
       </form>

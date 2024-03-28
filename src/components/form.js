@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { MdError } from "react-icons/md";
 
 const Form = () => {
@@ -6,9 +6,31 @@ const Form = () => {
 
   const [formData, setFormData] = useState({});
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleInputChange = (e) => {
+    if(e.target.type === `checkbox`){
+      setFormData((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
+    }else{
+      setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
   };
+
+  const handleRadioChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value}));
+    console.log(formData)
+  }
+
+  useEffect(()=>{
+
+    if(formData.isAgree){
+      setFormData((prev) => (
+        { ...prev, [`data`]: 'yes',
+        [`activity`]: 'yes',
+        [`tips`]: 'yes'
+        }));
+    }
+
+  },[formData.isAgree])
+
 
   const isValidEmail = useMemo(() => {
     if (formData?.email?.length < 1) {
@@ -79,7 +101,7 @@ const Form = () => {
             type="email"
             id="Email"
             name="email"
-            onChange={handleChange}
+            onChange={handleInputChange}
             value={formData.email ?? ""}
             placeholder="Email"
             className="w-full rounded p-2 min-w-[260px]"
@@ -96,7 +118,7 @@ const Form = () => {
             type="password"
             id="password"
             name="password"
-            onChange={handleChange}
+            onChange={handleInputChange}
             value={formData.password ?? ""}
             placeholder="Password"
             className="w-full rounded p-2 min-w-[260px]"
@@ -127,19 +149,19 @@ const Form = () => {
           {isValidPassword}
         </p>}
         <div className="flex items-start justify-center gap-4 max-w-[260px] mt-4">
-          <input className="scale-[1.7] mt-2" type="checkbox" />
+          <input className="scale-[1.7] mt-2" type="checkbox" name="isAgree" checked={formData?.isAgree} onChange={handleInputChange} />
           <p className="text-sm font-thin text-[#5e5e5e]">
             I agree to Typeforms <span>Terms of Service</span>,
             <span>Privacy Policy</span> and{" "}
             <span>Data Processing Agreement</span>.
           </p>
         </div>
-        <div className="ml-7 text-sm mt-4">
+        <div className="ml-7 text-sm mt-4 cursor-pointer">
           <p
             className="w-full flex justify-between items-center mb-4"
             onClick={() => setIsOptions(!isOptions)}
           >
-            See Options
+            See options
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className={` h-4 w-4 ${isOptions ? "rotate-180" : "rotate-0"} `}
@@ -166,7 +188,10 @@ const Form = () => {
                     type="radio"
                     name="tips"
                     id="tipsyes"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'yes'}
+                    onChange={handleRadioChange}
+                    checked={formData?.tips === `yes`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   Yes
                 </label>
@@ -175,7 +200,10 @@ const Form = () => {
                     type="radio"
                     name="tips"
                     id="tipsno"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'no'}
+                    onChange={handleRadioChange}
+                    checked={formData?.tips === `no`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   No
                 </label>
@@ -191,7 +219,10 @@ const Form = () => {
                     type="radio"
                     name="activity"
                     id="activityyes"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'yes'}
+                    onChange={handleRadioChange}
+                    checked={formData?.activity === `yes`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   Yes
                 </label>
@@ -200,7 +231,10 @@ const Form = () => {
                     type="radio"
                     name="activity"
                     id="activityno"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'no'}
+                    onChange={handleRadioChange}
+                    checked={formData?.activity === `no`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   No
                 </label>
@@ -216,7 +250,10 @@ const Form = () => {
                     type="radio"
                     name="data"
                     id="datayes"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'yes'}
+                    onChange={handleRadioChange}
+                    checked={formData?.data === `yes`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   Yes
                 </label>
@@ -225,7 +262,10 @@ const Form = () => {
                     type="radio"
                     name="data"
                     id="datano"
-                    class="size-5 border-gray-300 text-black-500"
+                    value={'no'}
+                    onChange={handleRadioChange}
+                    checked={formData?.data === `no`}
+                    className="size-5 border-gray-300 text-black-500"
                   />{" "}
                   No
                 </label>

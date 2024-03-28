@@ -21,7 +21,7 @@ const Form = () => {
   };
 
   useEffect(() => {
-    if (formData.isAgree) {
+    if(formData.isAgree) {
       setFormData((prev) => ({
         ...prev,
         [`data`]: "Yes",
@@ -29,7 +29,7 @@ const Form = () => {
         [`tips`]: "Yes",
       }));
     }
-  }, [formData.isAgree]);
+  }, [formData?.isAgree]);
 
   const isValidEmail = useMemo(() => {
     if (formData?.email?.length < 1) {
